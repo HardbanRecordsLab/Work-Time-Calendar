@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
-import { Calendar, CalendarDays, CalendarRange, Columns, Settings, Clock } from 'lucide-react';
+import { Calendar, CalendarDays, CalendarRange, Columns, Settings, Clock, Download } from 'lucide-react';
 import DayView from './components/DayView';
 import WeekView from './components/WeekView';
 import MonthView from './components/MonthView';
 import YearView from './components/YearView';
 import { useStore } from './hooks/useStore';
+import { usePWAInstall } from './hooks/usePWAInstall';
 import { cn } from './lib/utils';
 
 export type ViewType = 'day' | 'week' | 'month' | 'year';
@@ -15,6 +16,7 @@ export default function App() {
   const [currentView, setCurrentView] = useState<ViewType>('day');
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const { data, updateEntry, clearEntry, isLoaded } = useStore();
+  const { isInstallable, promptInstall } = usePWAInstall();
 
   if (!isLoaded) return null; // Or a simple loader
 
@@ -37,11 +39,29 @@ export default function App() {
             <span>TimeTracker.</span>
           </div>
           
-          <div className="flex gap-1 sm:gap-6 overflow-x-auto no-scrollbar w-full sm:w-auto justify-start sm:justify-end">
-            <NavButton active={currentView === 'day'} onClick={() => setCurrentView('day')} label="Dzień" />
-            <NavButton active={currentView === 'week'} onClick={() => setCurrentView('week')} label="Tydzień" />
-            <NavButton active={currentView === 'month'} onClick={() => setCurrentView('month')} label="Miesiąc" />
-            <NavButton active={currentView === 'year'} onClick={() => setCurrentView('year')} label="Rok" />
+          <div className="flex items-center justify-end w-full sm:w-auto overflow-hidden">
+            <div className="flex gap-1 sm:gap-6 overflow-x-auto no-scrollbar justify-start sm:justify-end mr-4">
+              <NavButton active={currentView === 'day'} onClick={() => setCurrentView('day')} label="Dzień" />
+              <NavButton active={currentView === 'week'} onClick={() => setCurrentView('week')} label="Tydzień" />
+              <NavButton active={currentView === 'month'} onClick={() => setCurrentView('month')} label="Miesiąc" />
+              <NavButton active={currentView === 'year'} onClick={() => setCurrentView('year')} label="Rok" />
+            </div>
+            {isInstallable && (
+              <button 
+                onClick={promptInstall}
+                className="hidden sm:flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-indigo-700 transition-colors shrink-0"
+              >
+                <Download className="w-4 h-4" /> Zainstaluj App
+              </button>
+            )}
+            {isInstallable && (
+              <button 
+                onClick={promptInstall}
+                className="sm:hidden flex items-center justify-center bg-indigo-600 text-white p-2 rounded-lg hover:bg-indigo-700 transition-colors shrink-0"
+              >
+                <Download className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
       </nav>
