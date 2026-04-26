@@ -8,6 +8,7 @@ import { cn } from '../lib/utils';
 import { useMemo, useState } from 'react';
 import { exportToCSV, exportToPDF } from '../lib/export';
 import { downloadICS } from '../lib/calendar';
+import { DayPicker } from 'react-day-picker';
 
 const SUGGESTIONS = [
   "Spotkanie projektowe",
@@ -139,7 +140,7 @@ export default function DayView({
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Main Panel */}
-        <div className="lg:col-span-8 flex flex-col gap-6 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+        <div className="lg:col-span-8 flex flex-col gap-6 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm order-1 lg:order-none">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-6">
             <div>
               <div className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1 flex items-center gap-2">
@@ -271,7 +272,29 @@ export default function DayView({
         </div>
 
         {/* Sidebar Summary */}
-        <div className="lg:col-span-4 flex flex-col gap-6">
+        <div className="lg:col-span-4 flex flex-col gap-6 order-2 lg:order-none">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 flex justify-center">
+             <DayPicker 
+               mode="single" 
+               selected={date} 
+               onSelect={(d) => d && onChangeDate(d)} 
+               locale={pl}
+               modifiers={{
+                  emerald: (d) => data[format(d, 'yyyy-MM-dd')]?.color === 'emerald',
+                  blue: (d) => data[format(d, 'yyyy-MM-dd')]?.color === 'blue',
+                  amber: (d) => data[format(d, 'yyyy-MM-dd')]?.color === 'amber',
+                  red: (d) => data[format(d, 'yyyy-MM-dd')]?.color === 'red',
+               }}
+               modifiersStyles={{
+                  emerald: { borderBottom: '3px solid #10B981', fontWeight: 'bold' },
+                  blue: { borderBottom: '3px solid #3B82F6', fontWeight: 'bold' },
+                  amber: { borderBottom: '3px solid #F59E0B', fontWeight: 'bold' },
+                  red: { borderBottom: '3px solid #EF4444', fontWeight: 'bold' },
+               }}
+               className="!m-0 font-sans text-sm"
+             />
+          </div>
+
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
             <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4 block">Ocena Dnia / Intensywność</h4>
             <div className="flex gap-3">
