@@ -279,6 +279,9 @@ export default function DayView({
                selected={date} 
                onSelect={(d) => d && onChangeDate(d)} 
                locale={pl}
+               captionLayout="dropdown"
+               startMonth={new Date(2020, 0)}
+               endMonth={new Date(2030, 11)}
                modifiers={{
                   emerald: (d) => data[format(d, 'yyyy-MM-dd')]?.color === 'emerald',
                   blue: (d) => data[format(d, 'yyyy-MM-dd')]?.color === 'blue',
