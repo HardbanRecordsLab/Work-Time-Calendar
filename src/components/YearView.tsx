@@ -186,25 +186,25 @@ export default function YearView({
         {/* Main Panel */}
         <div className="lg:col-span-8 flex flex-col gap-6 order-1">
           <div className="bg-white p-4 sm:p-6 border border-slate-200 rounded-2xl shadow-sm w-full h-[240px] sm:h-[320px]">
-              <h3 className="text-xs sm:text-sm font-semibold text-slate-700 mb-6 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-indigo-500" /> Trend godzinny roczny (<span className="text-slate-400 font-normal">Suma</span> / <span className="text-emerald-500 font-normal">Średnia dzienna</span>)
+              <h3 className="text-sm font-semibold text-slate-700 mb-6 flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-indigo-500" /> Trend godzinny roczny (<span className="text-slate-400 font-normal">Suma</span> / <span className="text-slate-800 font-normal">Średnia dzienna</span>)
              </h3>
              <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={monthStats} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#64748B' }} dy={10} />
-                  <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#64748B' }} />
-                  <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#64748B' }} />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748B' }} dy={10} />
+                  <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748B' }} />
+                  <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748B' }} />
                   <Tooltip 
                      cursor={{ fill: '#F1F5F9' }}
-                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}
+                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                      formatter={(value: number, name: string) => [
                        `${value.toFixed(1)}h`, 
                        name === 'hours' ? 'Suma' : 'Średnia dzienna'
                      ]}
                   />
                   <Bar yAxisId="left" dataKey="hours" fill="#4F46E5" radius={[4, 4, 0, 0]} maxBarSize={40} />
-                  <Bar yAxisId="right" dataKey="avgDailyHours" fill="#10B981" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                  <Bar yAxisId="right" dataKey="avgDailyHours" fill="#94A3B8" radius={[4, 4, 0, 0]} maxBarSize={40} />
                 </BarChart>
              </ResponsiveContainer>
           </div>
@@ -216,20 +216,20 @@ export default function YearView({
                  <div 
                    key={i} 
                    onClick={() => onChangeDate(stat.monthDate)}
-                   className="bg-white border border-slate-200 rounded-xl p-3 sm:p-5 cursor-pointer hover:border-indigo-400 hover:shadow-md transition-all group flex flex-col justify-between"
+                   className="bg-white border border-slate-200 rounded-2xl p-3 sm:p-5 cursor-pointer hover:border-indigo-200 hover:shadow-md hover:ring-1 hover:ring-indigo-100 transition-all group flex flex-col justify-between"
                  >
-                   <h3 className="text-xs sm:text-sm font-semibold capitalize text-slate-600 mb-2 sm:mb-3 group-hover:text-indigo-600 transition-colors">{format(stat.monthDate, 'MMMM', { locale: pl }).slice(0,3)}<span className="hidden sm:inline">{format(stat.monthDate, 'MMMM', { locale: pl }).slice(3)}</span></h3>
+                   <h3 className="text-xs sm:text-sm font-semibold capitalize text-slate-500 mb-2 sm:mb-3 group-hover:text-indigo-600 transition-colors">{format(stat.monthDate, 'MMMM', { locale: pl }).slice(0,3)}<span className="hidden sm:inline">{format(stat.monthDate, 'MMMM', { locale: pl }).slice(3)}</span></h3>
                    
-                   <div className="flex items-baseline mb-3 sm:mb-4 text-slate-900 gap-1">
-                     <span className="text-2xl sm:text-3xl font-serif tracking-tight">{stat.hours > 0 ? stat.hours.toFixed(1) : '0.0'}</span>
+                   <div className="flex items-baseline mb-3 sm:mb-4 text-slate-800 gap-1">
+                     <span className="text-2xl sm:text-3xl font-mono tracking-tight font-medium group-hover:text-indigo-900 transition-colors">{stat.hours > 0 ? stat.hours.toFixed(1) : '0.0'}</span>
                      <span className="text-xs sm:text-sm text-slate-400 font-sans">h</span>
                    </div>
 
-                   <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                   <div className="w-full bg-slate-100 rounded-full h-1 overflow-hidden">
                      <div 
                        className={cn(
                          "h-full transition-all duration-1000 rounded-full",
-                         stat.hours === maxMonthHours && stat.hours > 0 ? "bg-indigo-500" : "bg-slate-300"
+                         stat.hours === maxMonthHours && stat.hours > 0 ? "bg-indigo-500" : "bg-slate-300 group-hover:bg-indigo-300"
                        )}
                        style={{ width: `${Math.max(percentage, 5)}%` }}
                      />
@@ -264,13 +264,13 @@ export default function YearView({
              <div className="grid grid-cols-2 gap-4 border-t border-slate-100 pt-6 mt-6 relative z-10">
                 <div>
                   <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Najlepszy miesiąc</span>
-                  <div className="text-lg sm:text-xl font-serif capitalize text-indigo-600 font-semibold">
+                  <div className="text-lg sm:text-xl capitalize text-indigo-600 font-semibold">
                      {mostProductiveMonth || '-'}
                   </div>
                 </div>
                 <div>
                   <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Najlepszy dzień tyg.</span>
-                  <div className="text-lg sm:text-xl font-serif capitalize text-indigo-600 font-semibold truncate">
+                  <div className="text-lg sm:text-xl capitalize text-emerald-600 font-semibold truncate">
                      {busiestDay.totalHours > 0 ? busiestDay.fullName : '-'}
                   </div>
                 </div>
@@ -282,20 +282,20 @@ export default function YearView({
            </div>
 
            <div className="bg-white p-4 sm:p-6 border border-slate-200 rounded-2xl shadow-sm w-full h-[240px] flex flex-col relative z-20">
-             <h3 className="text-xs sm:text-sm font-semibold text-slate-700 mb-6 flex items-center gap-2">
+             <h3 className="text-sm font-semibold text-slate-700 mb-6 flex items-center gap-2">
                 <CalendarIcon className="w-4 h-4 text-indigo-500" /> Najbardziej aktywne dni
              </h3>
              <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={dayOfWeekStats} margin={{ top: 0, right: 0, left: -20, bottom: 0 }} layout="vertical">
                   <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#E2E8F0" />
-                  <XAxis type="number" axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#64748B' }} />
-                  <YAxis type="category" dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#64748B' }} className="capitalize" width={40} />
+                  <XAxis type="number" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748B' }} />
+                  <YAxis type="category" dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748B' }} className="capitalize" width={40} />
                   <Tooltip 
                      cursor={{ fill: '#F1F5F9' }}
-                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}
+                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                      formatter={(value: number) => [`${value.toFixed(1)}h`, 'Suma godzin']}
                   />
-                  <Bar dataKey="totalHours" fill="#6366F1" radius={[0, 4, 4, 0]} maxBarSize={20} />
+                  <Bar dataKey="totalHours" fill="#10B981" radius={[0, 4, 4, 0]} maxBarSize={20} />
                 </BarChart>
              </ResponsiveContainer>
            </div>

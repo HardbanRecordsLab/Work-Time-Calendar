@@ -124,6 +124,7 @@ export default function WeekView({
                 <tr className="text-[10px] uppercase font-bold text-slate-400 border-b border-slate-200 bg-white sticky top-0 z-10 shadow-sm">
                    <th className="py-2 sm:py-3 px-4 sm:px-6 font-semibold">Dzień</th>
                    <th className="py-2 sm:py-3 px-2 sm:px-4 text-center font-semibold">Status</th>
+                   <th className="py-2 sm:py-3 px-2 sm:px-4 text-center font-semibold whitespace-nowrap">Od - Do</th>
                    <th className="py-2 sm:py-3 px-4 sm:px-6 text-right font-semibold">Godziny</th>
                 </tr>
               </thead>
@@ -150,7 +151,7 @@ export default function WeekView({
                          <span className={cn("capitalize text-slate-900", !status.isWorkingDay && "text-slate-500")}>{format(d, 'EEEE', { locale: pl }).substring(0, 2)}</span>
                          {entry?.color && (
                             <span 
-                              className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ml-2 sm:ml-3 shadow-sm" 
+                              className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ml-2 sm:ml-3" 
                               style={{ backgroundColor: entry.color === 'emerald' ? '#10B981' : entry.color === 'blue' ? '#3B82F6' : entry.color === 'amber' ? '#F59E0B' : '#EF4444' }}
                             />
                          )}
@@ -169,29 +170,33 @@ export default function WeekView({
                            </span>
                          )}
                       </td>
-                      <td className={cn("py-2 sm:py-3 px-4 sm:px-6 text-right font-mono text-slate-700", hrs > 0 && "font-bold")}>
+                      <td className="py-2 sm:py-3 px-2 sm:px-4 text-center whitespace-nowrap font-mono text-[11px] sm:text-xs text-slate-500">
+                         {entry?.startTime || '-'} – {entry?.endTime || '-'}
+                      </td>
+                      <td className="py-2 sm:py-3 px-4 sm:px-6 text-right font-mono text-slate-700">
                         {hrs > 0 ? (hrs % 1 === 0 ? `${hrs}.0` : hrs.toFixed(1)) : '-'}
                       </td>
                     </tr>
                   );
                 })}
-                <tr className="bg-slate-50">
+                <tr className="bg-slate-50/80">
                   <td className="py-3 sm:py-4 px-4 sm:px-6 font-bold font-sans text-[10px] sm:text-xs uppercase tracking-widest text-slate-600">Suma</td>
                   <td className="text-center">-</td>
-                  <td className="py-3 sm:py-4 px-4 sm:px-6 text-right font-mono font-bold text-base sm:text-lg text-indigo-600">{totalHours > 0 ? totalHours.toFixed(1) : '-'}</td>
+                  <td className="text-center text-slate-400">-</td>
+                  <td className="py-3 sm:py-4 px-4 sm:px-6 text-right font-mono font-bold text-base sm:text-l text-slate-800">{totalHours > 0 ? totalHours.toFixed(1) : '-'}</td>
                 </tr>
               </tbody>
             </table>
             </div>
           </div>
 
-          <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 sm:p-6 shadow-sm">
-             <h4 className="text-[10px] font-bold uppercase tracking-widest text-indigo-800 mb-3 block">Wnioski tygodniowe / Planowanie</h4>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm">
+             <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3 block">Wnioski tygodniowe / Planowanie</h4>
              <textarea 
                value={weekNote}
                onChange={(e) => updateEntry?.(weekNoteKey, { notes: e.target.value })}
                placeholder="Zapisz swoje wnioski z mijającego tygodnia..."
-               className="w-full bg-transparent text-indigo-950 min-h-[80px] sm:min-h-[100px] resize-y focus:outline-none text-xs sm:text-sm placeholder-indigo-300/70 placeholder:italic leading-relaxed focus:ring-2 focus:ring-indigo-200 p-2 rounded-lg transition-all"
+               className="w-full bg-white text-slate-800 min-h-[80px] sm:min-h-[100px] resize-y focus:outline-none text-[13px] italic placeholder-slate-400 leading-relaxed border border-slate-200 focus:ring-2 focus:ring-indigo-300 p-3 rounded-lg shadow-inner transition-all"
              />
           </div>
         </div>
@@ -221,11 +226,11 @@ export default function WeekView({
              <div className="grid grid-cols-2 gap-4 border-t border-slate-100 pt-6 relative z-10">
                 <div>
                   <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Min. w tyg.</span>
-                  <div className="text-lg sm:text-xl font-mono font-medium text-slate-500">{maxHours > 0 ? minHours.toFixed(1) : '-'} h</div>
+                  <div className="text-lg sm:text-xl font-mono font-medium text-emerald-600">{maxHours > 0 ? minHours.toFixed(1) : '-'} h</div>
                 </div>
                 <div>
                   <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Max. w tyg.</span>
-                  <div className="text-lg sm:text-xl font-mono font-medium text-emerald-600">{maxHours > 0 ? maxHours.toFixed(1) : '-'} h</div>
+                  <div className="text-lg sm:text-xl font-mono font-medium text-indigo-600">{maxHours > 0 ? maxHours.toFixed(1) : '-'} h</div>
                 </div>
              </div>
              
@@ -235,16 +240,16 @@ export default function WeekView({
            </div>
            
            <div className="bg-white p-4 sm:p-6 border border-slate-200 rounded-2xl shadow-sm w-full h-[200px] sm:h-[240px]">
-             <h3 className="text-xs sm:text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2">
+             <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2">
                 <Activity className="w-4 h-4 text-indigo-500" /> Aktywność
              </h3>
              <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} margin={{ top: 0, right: 0, left: -25, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                  <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#64748B' }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#64748B' }} />
+                  <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748B' }} dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748B' }} />
                   <Tooltip 
-                     cursor={{ fill: '#F8FAFC' }}
+                     cursor={{ fill: '#F1F5F9' }}
                      contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                   />
                   <Bar dataKey="hours" fill="#4F46E5" radius={[4, 4, 0, 0]} maxBarSize={30} />

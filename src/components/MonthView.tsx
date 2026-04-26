@@ -238,12 +238,13 @@ export default function MonthView({
                </h3>
             </div>
             
-            <div className="overflow-x-auto flex-1">
+            <div className="overflow-x-auto flex-1 h-[600px]">
             <table className="w-full text-left border-collapse min-w-[320px]">
               <thead>
                 <tr className="text-[10px] uppercase font-bold text-slate-400 border-b border-slate-200 bg-white sticky top-0 z-10 shadow-sm">
                    <th className="py-2 sm:py-3 px-4 sm:px-6 font-semibold">Dzień</th>
                    <th className="py-2 sm:py-3 px-2 sm:px-4 text-center font-semibold">Status</th>
+                   <th className="py-2 sm:py-3 px-2 sm:px-4 text-center font-semibold whitespace-nowrap">Od - Do</th>
                    <th className="py-2 sm:py-3 px-2 sm:px-4 text-right font-semibold">Godziny</th>
                    <th className="py-2 sm:py-3 px-2 sm:px-4 text-right font-semibold">Bilans Dz.</th>
                    <th className="py-2 sm:py-3 px-4 sm:px-6 hidden sm:table-cell font-semibold">Notatki</th>
@@ -291,6 +292,9 @@ export default function MonthView({
                              <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                            </span>
                          )}
+                      </td>
+                      <td className="py-2 sm:py-3 px-2 sm:px-4 text-center whitespace-nowrap font-mono text-[11px] sm:text-xs text-slate-500">
+                         {entry?.startTime || '-'} – {entry?.endTime || '-'}
                       </td>
                       <td className="py-2 sm:py-3 px-2 sm:px-4 text-right font-mono text-slate-700">
                          {hrs > 0 ? hrs.toFixed(1) : '0.0'}
