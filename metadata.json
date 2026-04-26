@@ -1,0 +1,6 @@
+{
+  "name": "Work Hours Tracker",
+  "description": "Minimalistyczny roczny planer do ewidencji czasu pracy, uwzględniający polskie święta i dni wolne.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

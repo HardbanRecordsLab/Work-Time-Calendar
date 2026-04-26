@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer utilities {
+  .timeline-grid {
+    background-image: repeating-linear-gradient(90deg, #E2E8F0 0px, #E2E8F0 1px, transparent 1px, transparent 40px);
+  }
+}
+
+@layer base {
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+    cursor: pointer;
+  }
+}
