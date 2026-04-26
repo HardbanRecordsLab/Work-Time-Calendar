@@ -34,7 +34,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center font-serif font-black text-lg sm:text-xl tracking-tight text-indigo-600 shrink-0">
             <Clock className="w-5 h-5 text-indigo-600 mb-0.5 hidden sm:block mr-2" />
-            <span>2024.</span>
+            <span>TimeTracker.</span>
           </div>
           
           <div className="flex gap-1 sm:gap-6 overflow-x-auto no-scrollbar w-full sm:w-auto justify-start sm:justify-end">
